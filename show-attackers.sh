@@ -23,7 +23,7 @@ fi
 echo -e 'COUNT,\tIP_ADDRESS'
 
 # Loop thro the list of failed login attempts and corresponding IP addresses
-grep -i 'failed' syslog-sample | awk '{print $(NF-3)}' | sort | uniq -c | sort -n | while read COUNT IP; do
+grep -i 'failed' syslog-sample | awk '{print $(NF-3)}' | sort | uniq -c | sort -n | while read -r COUNT IP; do
   if [[ ${COUNT} -gt ${LIMIT} ]]; then
     echo -e "${COUNT},\t${IP}"
   fi
