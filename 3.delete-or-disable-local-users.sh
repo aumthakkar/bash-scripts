@@ -6,6 +6,29 @@
 # Modified:  Fri 30 May 09:41:14 BST 2025
 #############################################################################
 
+<<EOF
+-   This script by default disables non-system user Linux account(s) but will delete it if -d option is taken.
+    - Before deleting the user account it can archive the user's home directory with option -a.
+    - It only deletes the user account if the user archive is successful.
+-   Enforces that it be executed with superuser (root) privileges.
+-   Provides a usage statement much like you would find in a man page if the user does not supply an account name on the 
+    command line and returns an exit status of 1.
+    -    All messages associated with this event will be displayed on standard error.
+-   Disables (expires/locks) account(s) by default, or deletes account(s) upon choosing the delete (-d) option
+-   Allows the user to specify the following options:
+    -   -d Deletes accounts instead of disabling them.
+    -   -r Removes the home directory associated with the account(s).
+    -   -a Creates an archive of the home directory associated with the accounts(s) and stores the archive in the /
+           archives directory.  
+    -   Any other option will cause the script to display a usage statement and exit with an exit status of 1.
+        -   All messages associated with this event will be displayed on standard error.
+-   Accepts a list of usernames as arguments. At least one username is required or the script will display a usage     
+    statement much like you would find in a man page and return an exit status of 1.
+-   Refuses to disable or delete any accounts that have a UID less than 1000 (system accounts)
+-   Informs the user if the account was not able to be disabled, deleted, or archived for some reason.
+-   Displays the username and any actions performed against the account.
+EOF
+
 ARCHIVE_DIR="/archive"
 
 # Ensure user running with root privileges

@@ -1,10 +1,21 @@
 #!/bin/bash 
-###################################################################################
+#####################################################################################
 # Author:  Pranav Thakkar
 # Date:  Wed 28 May 08:31:12 BST 2025
-# Description:  Add local user and self generated pwd and display minimal messages
+# Description:  Add local user and self generated pwd and displays minimal messages
 # Modified:  Wed 28 May 08:31:12 BST 2025
-###################################################################################
+#####################################################################################
+
+<<EOF
+-   This script creates new Linux accounts on the system by taking the user account to be created as cmd argument.
+-   The script enforces that it be executed with superuser (root) privileges.
+-   Uses the first argument provided on the command line as the username for the account. 
+    -   Any remaining arguments on the command line will be treated as the comment for the account.
+-   It automatically generates a password (with special character, if required) for the new account.
+-   If the account is not created, the script returns an exit status of 1.  
+    -   All messages associated with this event will be displayed on standard error.
+EOF
+
 
 # Inform user to use root equivalent profile to run this script
 if [[ ${UID} -ne 0 ]]; then

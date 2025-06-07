@@ -6,6 +6,18 @@
 # Modified:  Mon 2 Jun 15:36:23 BST 2025
 ########################################################################
 
+<<EOF
+-   This shell script displays the number of failed login attempts by IP address in a CSV file format.
+-   It requires that a log_file is provided as an argument. 
+    -   If the log_file is not provided, or it cannot be read, then the script will display an error message and exit   
+        with a status of 1.
+        -    All messages associated with this event will be displayed on standard error.
+-   Counts the number of failed login attempts by IP address.
+    -   If there are any IP addresses with more than 10 failed login attempts, the number of attempts made and the IP address 
+        from which those attempts were made, will be displayed in a CSV file format
+EOF
+
+
 LOG_FILE="${1}"
 LIMIT=10
 

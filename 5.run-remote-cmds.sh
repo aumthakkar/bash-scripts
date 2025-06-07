@@ -6,12 +6,32 @@
 # Modified:  Wed 4 Jun 14:57:45 BST 2025
 #################################################################################
 
+<<EOF
+-   This script executes all arguments as a single command on every server listed in the ./servers file by default.
+-   It executes the provided command(s) as the user executing the script.
+-   Enforces that it be executed without superuser (root) privileges. 
+    -   If the user wants the remote commands executed with superuser (root) privileges, they are to specify the -s 
+        option.
+-   Allows the user to specify the following options:
+    -   -f FILE  This allows the user to override the default file of ./servers. This way they can create their 
+            own list of servers execute commands against that list.
+    -   -n This allows the user to perform a "dry run" where the commands will be displayed instead of executed. It precedes   
+           each command that would have been executed with "DRY RUN: ".
+    -   -s Run the command with sudo (superuser) privileges on the remote servers.
+    -   -v Enable verbose mode, which displays the name of the server for which the command is being executed on.
+-   Provides a usage statement much like you would find in a man page. If the user does not supply a command to run on 
+    the command line and returns an exit status of 1.
+    -   All messages associated with this event will be displayed on standard error.
+-   Exits with an exit status of 0 or the most recent non-zero exit status of the ssh command.
+EOF
+
+
 SERVERS_FILE='./servers'
 SSH_OPTION='-o ConnectTimeout=2'
 
 # Usage statement if user takes wrong option(s)
 usage() {
-  echo "Usage: ./${0} -f FILENAME nsv"
+  echo "Usage: ./${0} -f FILENAME nsv 'CMD; [CMD]...'"
   echo ' -f: Provide a file containing the list of servers where this command has to run' >&2
   echo ' -n: Dry run - The command will just be displayed and not executed' >&2
   echo ' -s: Run the command with sudo privileges on the remote servers' >&2

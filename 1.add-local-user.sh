@@ -6,6 +6,15 @@
 # Modified:  Tue 27 May 15:28:42 BST 2025
 ########################################################################
 
+<<EOF
+-   This script creates new Linux accounts on the system 
+-   It enforces that this script be executed with superuser (root) privileges.
+-   It prompts the person who executed the script to enter the username (login), the real name for person who will be using the 
+    account, and the initial password for the account.
+-   Once account is created, it displays the username, password, and host where the account was created.
+EOF
+
+
 # Inform the user to use root equivalent profile to run this script
 if [[ ${UID} -ne 0 ]]; then
   echo 'Please login as root user equivalent to run this script, Bye!'
