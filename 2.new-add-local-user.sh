@@ -17,26 +17,26 @@
 EOF
 
 
-# Inform user to use root equivalent profile to run this script
+# Inform user to use root equivalent profile to run this script.
 if [[ ${UID} -ne 0 ]]; then
   echo 'Please logon as root equivalent to run this script, Bye!' >&2
   exit 1
 fi
 
-# Provide Usage statement
+# Usage statement if user takes wrong option(s).
 usage() {
   echo "Usage: ./${0} LOGIN_NAME [User_Desc].." >&2
   exit 1 
 }
 
-# Show Usage statement if user does not provide any argument
+# Show Usage statement if user does not provide any argument.
 if [[ "${#}" -lt 1 ]]; then
   usage
 fi
 
 
-# Parse the Command to get the username and the comment part
-USER=${1}
+# Parse the Command to get the username and the comment part.
+USER="${1}"
 shift
 COMMENT="${@}"
 

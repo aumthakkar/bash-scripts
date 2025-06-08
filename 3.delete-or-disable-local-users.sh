@@ -31,13 +31,13 @@ EOF
 
 ARCHIVE_DIR="/archive"
 
-# Ensure user running with root privileges
+# Ensure user running with root privileges.
 if [[ ${UID} -ne 0 ]]; then
   echo 'Please use root privileges to run this script, Bye!' >&2
   exit 1
 fi
 
-# Provide Usage statement
+# Usage statement if user takes wrong option(s).
 usage() {
   echo "Usage: ./${0} [-dra] USER_NAME [USER_NAME]... " >&2
   echo 'Disable a local Linux Account' >&2
@@ -46,7 +46,7 @@ usage() {
   echo ' -a archives the associated user home directory' >&2
 }
 
-# Parse the options
+# Parse the options.
 while getopts dra OPTION; do
   case ${OPTION} in
     d) DELETE_USER='true' ;;
@@ -56,34 +56,34 @@ while getopts dra OPTION; do
   esac
 done
 
-# Remove the Options while leaving the arguments
-shift "$(( OPTIND -1 ))"
+# Remove the Options while leaving the arguments.
+shift "$(( OPTIND - 1 ))"
 
-# Inform Usage if user has not passed any username argument on command line
+# Inform Usage if user has not passed any username argument on command line.
 if [[ ${#} -lt 1 ]]; then
   usage
   exit 1
 fi
 
-# Remaining arguments on cmd line are the user account names to be created 
+# Remaining arguments on cmd line are the user account names to be created.
 USERS="${@}"
 
-# Loop through all the usernames supplied as arguments
+# Loop through all the usernames supplied as arguments.
 for USER in ${USERS}; do
-  # Check and inform that user account won't be exercised if its a system account
-  USERID="$(id -u "$USER")"
-  if [[ ${USERID} -lt 1000 ]]; then
+  # Check and inform that user account won't be exercised if its a system account.
+  USERID="$(id -u "${USER}")"
+  if [[ "${USERID}" -lt 1000 ]]; then
     echo 'Cannot exercise this user account as its a system account!, Bye' >&2
     exit 1 
   fi
 
-  # Exercise the Archive Option
-  if [[ "${ARCHIVE}" = 'true' ]]; then
-    # Make sure the Archive directory exists
+  # Exercise the Archive Option.
+  if [[ "${ARCHIVE}" = 'true' ]]; then    
+    # Make sure the Archive directory exists.
     if [[ ! -d "${ARCHIVE_DIR}" ]]; then
       echo "Creating Archive directory: ${ARCHIVE_DIR}"
-      mkdir -p /archive
-    # Inform if Archive directory could not be created
+      mkdir -p '/archive'
+    # Inform if Archive directory could not be created.
       if [[ ${?} -ne 0 ]]; then
         echo "Archive directory ${ARCHIVE_DIR} could not be created, pls inform Admin" >&2
         exit1
@@ -99,7 +99,7 @@ for USER in ${USERS}; do
       # Run the backup command
       tar -cvzf "${ARCHIVE_FILE}" "${HOME_DIR}" > /dev/null    
 
-    # Check to see if the backup was successful
+    # Check to see if the backup was successful.
       if [[ ${?} -eq 0 ]]; then
         echo "${USER}'s home dir archived to ${ARCHIVE_FILE}"
         BACKUP_COMPLETE='true'
@@ -111,13 +111,13 @@ for USER in ${USERS}; do
       BACKUP_NOT_REQD='true'
   fi
 
-  # Exercise the Delete user option ensuring that user backup is complete
+  # Exercise the Delete user option ensuring user backup is complete or not required
   if [[ "${DELETE_USER}" = 'true' && "${BACKUP_COMPLETE}" = 'true' || "${DELETE_USER}" = 'true' && "${BACKUP_NOT_REQD}" = 'true' ]]; then
 
     # Run the userdel command
     userdel "${REMOVE_HOME_DIR}" "${USER}"
 
-    # Check to see if the delete user command was successful
+    # Check and inform if the delete user command was successful. 
     if [[ ${?} -ne 0 ]]; then
       echo "User: ${USER} could not be deleted, pls inform Admin" >&2
       exit 1
@@ -127,10 +127,10 @@ for USER in ${USERS}; do
 
   else
 
-    # Run the Disable User command which this script runs by default for the users specified 
+    # Run the Disable User command which this script runs by default for the users specified. 
     chage -E 0 "${USER}"
 
-    # Check to see if the disable user command was successful
+    # Check and inform if the disable user command was successful.
     if [[ ${?} -ne 0 ]]; then
       echo "User: ${USER} could not be disabled, pls inform Admin" >&2
       exit 1

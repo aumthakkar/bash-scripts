@@ -22,9 +22,9 @@ if [[ ${UID} -ne 0 ]]; then
 fi
 
 # Prompt to ask the user name for login details
-read -p 'Please enter the username: ' USER
-read -p "Please provide user's real name: " REAL_NAME
-read -p 'Please provide the password for this user: ' PASSWD
+read -rp 'Please enter the username: ' USER
+read -rp "Please provide user's real name: " REAL_NAME
+read -rp 'Please provide the password for this user: ' PASSWD
 
 # Create the user
 useradd -c "${REAL_NAME}" -m "${USER}"
@@ -49,4 +49,4 @@ passwd -e "${USER}"
 
 
 # Inform the user's about the user creation with details
-echo "${USER} was created on $(hostname) with a password of ${PASSWD}"
+echo "User '${USER}' was created on System '$(hostname)' with a password of '${PASSWD}'"

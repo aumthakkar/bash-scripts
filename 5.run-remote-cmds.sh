@@ -29,7 +29,7 @@ EOF
 SERVERS_FILE='./servers'
 SSH_OPTION='-o ConnectTimeout=2'
 
-# Usage statement if user takes wrong option(s)
+# Usage statement if user takes wrong option(s).
 usage() {
   echo "Usage: ./${0} -f FILENAME nsv 'CMD; [CMD]...'"
   echo ' -f: Provide a file containing the list of servers where this command has to run' >&2
