@@ -25,13 +25,12 @@
 -   Exits with an exit status of 0 or the most recent non-zero exit status of the ssh command.
 EOF
 
-
-SERVERS_FILE='./servers'
+SERVERS_FILE='./servers_list'
 SSH_OPTION='-o ConnectTimeout=2'
 
-# Usage statement if user takes wrong option(s).
+# Usage statement if user takes wrong option(s)
 usage() {
-  echo "Usage: ./${0} -f FILENAME nsv 'CMD; [CMD]...'"
+  echo "Usage: ./${0} -f FILENAME -nsv 'CMD; [CMD]...'"
   echo ' -f: Provide a file containing the list of servers where this command has to run' >&2
   echo ' -n: Dry run - The command will just be displayed and not executed' >&2
   echo ' -s: Run the command with sudo privileges on the remote servers' >&2
@@ -62,7 +61,7 @@ shift $(( OPTIND - 1 ))
 if [[ "${#}" -lt 1 ]]; then
   usage
 fi
-REMOTE_CMD="${@}"
+REMOTE_CMD="${*}"
 
 # Make sure the SERVER_LIST file exists.
 if [[ ! -e "${SERVERS_FILE}" ]]; then
@@ -99,7 +98,7 @@ for SERVER in $(cat "${SERVERS_FILE}"); do
       echo 'ssh remote command executed successfully'
       echo
     fi
-  fi   
+  fi 
 done  
         
 exit ${EXIT_STATUS}

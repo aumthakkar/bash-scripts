@@ -66,7 +66,7 @@ if [[ ${#} -lt 1 ]]; then
 fi
 
 # Remaining arguments on cmd line are the user account names to be created.
-USERS="${@}"
+USERS="${*}"
 
 # Loop through all the usernames supplied as arguments.
 for USER in ${USERS}; do
@@ -86,11 +86,10 @@ for USER in ${USERS}; do
     # Inform if Archive directory could not be created.
       if [[ ${?} -ne 0 ]]; then
         echo "Archive directory ${ARCHIVE_DIR} could not be created, pls inform Admin" >&2
-        exit1
+        exit 1
       fi
     fi
-  fi
-      
+
     HOME_DIR="/home/${USER}"
     ARCHIVE_FILE="${ARCHIVE_DIR}/${USER}.tgz"
 
@@ -109,6 +108,7 @@ for USER in ${USERS}; do
     else
       echo "${HOME_DIR} does not exist" >&2
       BACKUP_NOT_REQD='true'
+    fi
   fi
 
   # Exercise the Delete user option ensuring user backup is complete or not required

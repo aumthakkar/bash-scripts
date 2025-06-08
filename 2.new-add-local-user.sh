@@ -7,7 +7,7 @@
 #####################################################################################
 
 <<EOF
--   This script creates new Linux accounts on the system by taking the user account to be created as cmd argument.
+-   This script creates new Linux account on the system by taking the user account to be created as cmd argument.
 -   The script enforces that it be executed with superuser (root) privileges.
 -   Uses the first argument provided on the command line as the username for the account. 
     -   Any remaining arguments on the command line will be treated as the comment for the account.
@@ -72,7 +72,7 @@ fi
 passwd -e "${USER}" &> /dev/null
 
 # Inform the Operator about User Creation details
-echo "User: '${USER}' with a password of '${PASSWD}' has been created on System: $(hostname)"
+echo "User '${USER}' was created on System '$(hostname)' with a password of '${PASSWD}'"
 exit 0
 echo
 
